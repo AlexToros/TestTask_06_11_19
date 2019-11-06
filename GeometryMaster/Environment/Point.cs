@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Math;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,16 @@ namespace GeometryMaster
         {
             X = x;
             Y = y;
+        }
+
+        public double DistanceTo(Point point) => Sqrt(Pow(X - point.X, 2) + Pow(Y - point.X, 2));
+
+        public double AngleBetween(Point A, Point B)
+        {
+            var vec1 = new Vector(this, A);
+            var vec2 = new Vector(this, B);
+
+            return vec1.AngleBetween(vec2);
         }
     }
 }
