@@ -4,6 +4,9 @@ using System.Text;
 
 namespace GeometryMaster
 {
+    /// <summary>
+    /// Абстрактное представление фигуры
+    /// </summary>
     public abstract class Figure : IAreable
     {
         public abstract double GetArea();

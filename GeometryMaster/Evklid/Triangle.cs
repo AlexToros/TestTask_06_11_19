@@ -7,15 +7,30 @@ namespace GeometryMaster.Evklid
 {
     public enum TriangleType
     {
+        /// <summary>
+        /// Общий
+        /// </summary>
         Common,
+        /// <summary>
+        /// Равносторонний
+        /// </summary>
         Equilateral,
+        /// <summary>
+        /// Прямоугольный
+        /// </summary>
         Rectangular,
+        /// <summary>
+        /// Равнобедренный
+        /// </summary>
         Isosceles
     }
     public class Triangle : Polygon
     {
         private TriangleType? type;
 
+        /// <summary>
+        /// Тип треугольника
+        /// </summary>
         public TriangleType Type
         {
             get
@@ -37,7 +52,14 @@ namespace GeometryMaster.Evklid
             }
         }
 
+        /// <summary>
+        /// Треугольник, заданный с помощью трех точек
+        /// </summary>
         public Triangle(Point A, Point B, Point C) : base(A, B, C) { }
+        /// <summary>
+        /// Треугольник, заданный с помощью двух сторон и угла между ними
+        /// </summary>
+        /// <param name="BetweenAngle">Угол между двумя сторонами (в радианах)</param>
         public Triangle(double SideOne, double SideTwo, double BetweenAngle) :
             this(new Point(0, 0), new Point(0, SideOne),
                 new Point(Sin(BetweenAngle) * SideTwo, Cos(BetweenAngle) * SideTwo))
