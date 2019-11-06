@@ -7,11 +7,14 @@ namespace GeometryMaster.Evklid
 {
     public class Polygon : FlatFigure
     {
-        private Point[] points;
+        protected Point[] points;
 
         public Polygon(IEnumerable<Point> points) : this(points.ToArray()) { }
+
         public Polygon(params Point[] points)
         {
+            if (points.Length < 3)
+                throw new ArgumentException("Фигура должна иметь минимум три вершины");
             this.points = points;
         }
 

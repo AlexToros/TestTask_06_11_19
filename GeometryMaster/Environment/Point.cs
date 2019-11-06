@@ -16,7 +16,7 @@ namespace GeometryMaster
             Y = y;
         }
 
-        public double DistanceTo(Point point) => Sqrt(Pow(X - point.X, 2) + Pow(Y - point.X, 2));
+        public double DistanceTo(Point point) => Sqrt(Pow(X - point.X, 2) + Pow(Y - point.Y, 2));
 
         public double AngleBetween(Point A, Point B)
         {
