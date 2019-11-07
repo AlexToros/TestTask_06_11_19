@@ -5,24 +5,33 @@ using System.Text;
 
 namespace GeometryMaster.Evklid
 {
+    [Flags]
     public enum TriangleType
     {
         /// <summary>
         /// Общий
         /// </summary>
-        Common,
+        Common = 0,
         /// <summary>
         /// Равносторонний
         /// </summary>
-        Equilateral,
-        /// <summary>
-        /// Прямоугольный
-        /// </summary>
-        Rectangular,
+        Equilateral = 1,
         /// <summary>
         /// Равнобедренный
         /// </summary>
-        Isosceles
+        Isosceles = 2,
+        /// <summary>
+        /// Прямоугольный
+        /// </summary>
+        Rectangular = 4,
+        /// <summary>
+        /// Остроугольный
+        /// </summary>
+        Acute = 8,
+        /// <summary>
+        /// Тупоугольный
+        /// </summary>
+        Obtuse = 16,
     }
     public class Triangle : Polygon
     {
@@ -37,16 +46,26 @@ namespace GeometryMaster.Evklid
             {
                 if (!type.HasValue)
                 {
+                    type = TriangleType.Common;
                     var distances = new double[] { points[0].DistanceTo(points[1]), points[1].DistanceTo(points[2]), points[2].DistanceTo(points[0]) };
                     Array.Sort(distances);
-                    if ((distances[2] * distances[2]).Round() == (distances[1] * distances[1] + distances[0] * distances[0]).Round())
-                        type = TriangleType.Rectangular;
-                    else if (distances[0].Round() == distances[1].Round() && distances[1].Round() == distances[2].Round())
-                        type = TriangleType.Equilateral;
-                    else if (distances[0].Round() == distances[1].Round() || distances[1].Round() == distances[2].Round() || distances[2].Round() == distances[0].Round())
-                        type = TriangleType.Isosceles;
+                    var maxSizeSquare = (distances[2] * distances[2]).Round();
+                    var otherSizeSumSquare = (distances[1] * distances[1] + distances[0] * distances[0]).Round();
+                    var sideOne = distances[0].Round();
+                    var sideTwo = distances[1].Round();
+                    var sideThree = distances[2].Round();
+
+                    if (maxSizeSquare == otherSizeSumSquare)
+                        type |= TriangleType.Rectangular;
+                    else if (maxSizeSquare > otherSizeSumSquare)
+                        type |= TriangleType.Obtuse;
                     else
-                        type = TriangleType.Common;
+                        type |= TriangleType.Acute;
+
+                    if (sideOne == sideTwo && sideTwo == sideThree)
+                        type |= TriangleType.Equilateral;
+                    else if (sideOne == sideTwo || sideTwo == sideThree || sideThree == sideOne)
+                        type |= TriangleType.Isosceles;
                 }
                 return type.Value;
             }
